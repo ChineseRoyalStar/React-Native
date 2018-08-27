@@ -7,7 +7,11 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, Dimensions,PixelRatio, TextInput} from 'react-native';
+
+const {height, width} = Dimensions.get('window');
+const pixelRatio = PixelRatio.get();
+let widthOfMargin = Dimensions.get('window').width * 0.05;
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -16,14 +20,21 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   render() {
+    let aValue;
+    console.log('Render has beee excuted.');
+    console.log('Screen height is:' + height);
+    console.log('aValue is:' + aValue);
+    console.log('The type of aValue is:' + typeof(aValue));
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <TextInput style={styles.textInputStyle} placeholder={'请输入手机号'} />
+        <Text style={styles.textPromptStyle}>您输入的手机号:</Text>
+        <TextInput style={styles.textInputStyle} 
+        placeholder={'请输入密码'} 
+        secureTextEntry={true}/>
+        <Text style={styles.bigTextPrompt}>确定</Text>
       </View>
     );
   }
@@ -32,18 +43,23 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  textInputStyle: {
+    margin: widthOfMargin,
+    backgroundColor: 'gray',
+    height: 30,
+    fontSize: 20
   },
-  instructions: {
+  textPromptStyle: {
+    margin: widthOfMargin,
+    fontSize: 20
+  },
+  bigTextPrompt: {
+    margin: widthOfMargin,
+    backgroundColor: 'gray',
+    color: 'white',
     textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    fontSize: 30
   },
 });
