@@ -21,30 +21,6 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputedNum: '',
-      inputPW: ''
-    }; 
-    this.updatePW = this.updatePW.bind(this);
-  }
-  updateNum(newText) {
-    this.setState(() => {
-      return {
-        inputedNum: newText,
-      };
-    });
-  }
-
-  updatePW(newText) {
-    this.setState(() => {
-      return {
-        inputPW: newText,
-      };
-    });
-  }
-
   render() {
     let aValue;
     console.log('Render has beee excuted.');
@@ -53,13 +29,12 @@ export default class App extends Component {
     console.log('The type of aValue is:' + typeof(aValue));
     return (
       <View style={styles.container}>
-        <TextInput style={styles.textInputStyle} placeholder={'请输入手机号'} onChangeText={(newText) => {this.updateNum(newText)}}/>
-        <Text style={styles.textPromptStyle}>您输入的手机号:{this.state.inputedNum}</Text>
+        <TextInput style={styles.textInputStyle} placeholder={'请输入手机号'} />
+        <Text style={styles.textPromptStyle}>您输入的手机号:</Text>
         <TextInput style={styles.textInputStyle} 
         placeholder={'请输入密码'} 
-        secureTextEntry={true}
-        onChangeText={this.updatePW}/>
-        <Text style={styles.bigTextPrompt}>确 定</Text>
+        secureTextEntry={true}/>
+        <Text style={styles.bigTextPrompt}>确定</Text>
       </View>
     );
   }
