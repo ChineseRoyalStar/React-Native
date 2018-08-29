@@ -30,20 +30,11 @@ export default class App extends Component {
     this.updatePW = this.updatePW.bind(this);
   }
   updateNum(newText) {
-    this.setState((oldState) => {
-      for(var aName in oldState) {
-        console.log(aName);
-        console.log(oldState[aName]);
-      }
+    this.setState(() => {
       return {
         inputedNum: newText,
-        aBrandnewStateVariable: 'I am a new variable.'
       };
-    }, this.changeNumDone);
-  }
-  
-  changeNumDone() {
-    console.log('React Native has changed inputed Num');
+    });
   }
 
   updatePW(newText) {
