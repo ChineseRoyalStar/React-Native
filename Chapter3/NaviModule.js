@@ -10,7 +10,6 @@ import React, {Component} from 'react';
 import {AppRegistry, Platform, BackHandler} from 'react-native';
 import LoginLeaf from './LoginLeaf';
 import WaitingLeaf from './WaitingLeaf';
-import { platform } from 'os';
 
 export default class NaviModule extends Component {
 
@@ -59,5 +58,3 @@ export default class NaviModule extends Component {
       BackHandler.removeEventListener('hardwareBackPress', this.handleBackSignal);
   }
 }
-
-AppRegistry.registerComponent('LearnRN', () => NaviModule);
