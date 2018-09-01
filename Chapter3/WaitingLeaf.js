@@ -6,6 +6,7 @@
  * @flow
  */
 
+import PropTypes from 'prop-types'; // 在代码最开始导入PropTypes类
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
@@ -33,6 +34,11 @@ export default class WaitingLeaf extends Component {
   onGobackPressed() {
     this.props.onGobackPressed();
   }
+}
+
+WaitingLeaf.PropTypes = { 
+  phoneNumber: PropTypes.string,
+  userPW: PropTypes.string
 }
 
 const styles = StyleSheet.create({
