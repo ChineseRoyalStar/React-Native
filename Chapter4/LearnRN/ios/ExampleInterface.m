@@ -68,6 +68,10 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)msg) {
   self.contactPhoneNumber = [self.contactPhoneNumber stringByReplacingOccurrencesOfString:@" " withString:@""];
   NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
   [dic setObject:@"pickContactResult" forKey:@"msgType"];
+  if (self.contactPhoneNumber == nil) {
+    self.contactPhoneNumber = @"";
+  }
+  [dic setObject:self.contactPhoneNumber forKey:@"peerNumber"];
   if (self.contactName == nil) {
     self.contactName = @"";
   }
