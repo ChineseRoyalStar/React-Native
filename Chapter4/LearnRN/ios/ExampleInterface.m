@@ -9,7 +9,10 @@
 #import "ExampleInterface.h"
 #import "CallAdressbookViewController.h"
 
-@interface ExampleInterface()
+@interface ExampleInterface(){
+  RCTPromiseResolveBlock _resolveBlock; //定义成员变量
+  RCTPromiseRejectBlock _rejectBlock; //定义成员变量
+}
 @property(nonatomic, strong) NSDictionary *dic;
 @end
 
@@ -29,7 +32,9 @@
 //通常不指定名字,默认使用Objective-C类的名字
 RCT_EXPORT_MODULE();
 //使用RCT_EXPORT_METHOD()宏声明需要提供给React Native组件调用的方法
-RCT_EXPORT_METHOD(sendMessage:(NSString *)msg) {
+RCT_EXPORT_METHOD(sendMessage:(NSString *)msg resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+  _resolveBlock = resolve;  //保存回调参数
+  _rejectBlock = reject;    //保存回调参数
   //在调试窗口中打印React Native组件调用此函数时携带的参数
   NSLog(@"接收到来自React Native的消息: %@", msg);
   //检收到的消息是否为JSON格式
@@ -58,7 +63,10 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)msg) {
 }
 
 - (void)calendarEventReminderReceived: (NSNotification *)notification {
-  if (notification.object == nil) return; // 当用于取消处理时
+  if (notification.object == nil) {
+    _rejectBlock(@"user canceled", @"user canceled",nil);
+    return; // 当用于取消处理时
+  }
   self.contactPhoneNumber = notification.object;
   self.contactName = notification.userInfo[@"name"];
   //去除获取到的电话号码中的特殊字符
@@ -82,8 +90,9 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)msg) {
   NSData *data = [NSJSONSerialization dataWithJSONObject:self.dic options:0 error:&error];
   NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
   //向React Native侧发送消息
-  [self.bridge.eventDispatcher sendAppEventWithName:@"NativeModuleMsg" body:@{@"message":str}];
+  //[self.bridge.eventDispatcher sendAppEventWithName:@"NativeModuleMsg" body:@{@"message":str}];
   //注意本行中body后的消息名称关键字message,它需要于JS代码中的消息名称关键字保持一致
+  _resolveBlock(str);
 }
 
 @end

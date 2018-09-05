@@ -126,11 +126,25 @@ export default class LoginLeaf extends Component {
     console.log('userPressAddressBook is called.');
     var {NativeAppEventEmitter} = require('react-native');
     //向事件接收器注册接受名为NativeModuleMsg的事件,并且指定收到事件后的处理函数
-    NativeAppEventEmitter.addListener('NativeModuleMsg', (reminder) => {
-      this.handleNativeInterfaceMsg(reminder.message);  
-    }); //指定处理名称为message的消息,与Objective-C代码中指定的消息名称一致
+    //NativeAppEventEmitter.addListener('NativeModuleMsg', (reminder) => {
+      //this.handleNativeInterfaceMsg(reminder.message);  
+    //}); //指定处理名称为message的消息,与Objective-C代码中指定的消息名称一致
     let ExampleInterface = require('react-native').NativeModules.ExampleInterface;
-    ExampleInterface.sendMessage('{\"msgType\":\"pickContact\"}');
+    ExampleInterface.sendMessage('{\"msgType\":\"pickContact\"}').then(
+      (result)=> {
+        console.log(result);
+        let msgObj = JSON.parse(result);
+        this.setState({inputedNum: msgObj.peerNumber});
+      }
+    ).catch (
+      (error)=>{
+        console.log(error);
+        console.log(error.message);
+        console.log(error.code);
+        console.log(error.nativeStackIOS);
+        console.log(error.nativeStackIOS.length);
+      }
+    );
   }
 
   //事件处理函数, 把收到的消息打印在调试日志中,并解释出消息中的号码,显示在手机屏幕上
