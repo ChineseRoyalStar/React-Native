@@ -15,11 +15,13 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.vs} />
-        <View style={styles.vs2} />
-        <View style={styles.vs} />
-        <View style={styles.vs1} />
-        <View style={styles.vs} />
+        <View style={styles.welcome} opacity={0} />
+        <View style={styles.welcome} opacity={0.1} />
+        <View style={styles.welcome} opacity={0.25} />
+        <View style={styles.welcome} opacity={0.5} />
+        <View style={styles.welcome} opacity={0.75} />
+        <View style={styles.welcome} opacity={1} />
+        <View style={styles.welcome} opacity={5} />
       </View>
     );
   }
@@ -29,20 +31,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-around',
-    backgroundColor: 'white'
+    alignItems: 'center',
+    backgroundColor: 'grey'
   },
-  vs: {
+  welcome: {
+    width: 50,
     height: 50,
-    backgroundColor: 'gray',
-  },
-  vs1: {
-    flex:1,
-    height: 50,
-    backgroundColor: 'black',
-  },
-  vs2: {
-    flex:2,
-    height: 50,
-    backgroundColor: 'black',
+    borderWidth: 1,
+    borderRadius: 25,
+    backgroundColor: 'white',
   }
 });
