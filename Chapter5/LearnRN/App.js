@@ -15,12 +15,11 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.firstRow}>
-          <View style={styles.test1} />
-          <View style={styles.test2} />
-          <View style={styles.test3} />
-        </View>
-        <View style={styles.testPosition}/>
+        <View style={styles.vs} />
+        <View style={styles.vs2} />
+        <View style={styles.vs} />
+        <View style={styles.vs1} />
+        <View style={styles.vs} />
       </View>
     );
   }
@@ -29,37 +28,21 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-around',
     backgroundColor: 'white'
   },
-  firstRow: {
-    height: 40,
-    top: 40,
-    backgroundColor: 'black',
-    flexDirection: 'row',
-    //justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  test1: {
-    width: 68,
-    height: 24,
-    backgroundColor: 'red',
-  },
-  test2: {
-    width: 40,
-    height: 24,
-    backgroundColor: 'green',
-  },
-  test3: {
-    width: 100,
-    height: 24,
-    backgroundColor: 'blue',
-  },
-  testPosition: {
+  vs: {
+    height: 50,
     backgroundColor: 'gray',
-    height: 60,
-    width: 60,
-    position: 'absolute',
-    top: 150,
-    right: 50
+  },
+  vs1: {
+    flex:1,
+    height: 50,
+    backgroundColor: 'black',
+  },
+  vs2: {
+    flex:2,
+    height: 50,
+    backgroundColor: 'black',
   }
 });
