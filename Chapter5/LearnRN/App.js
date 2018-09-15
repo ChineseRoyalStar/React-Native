@@ -11,28 +11,40 @@ import {StyleSheet, View, Text} from 'react-native';
 
 export default class App extends Component {
  
-  constructor(props) {
-    super(props);
-    this._onTouchMove = this._onTouchMove.bind(this);
-    this._onTouchStart = this._onTouchStart.bind(this);
-    this._onTouchEnd = this._onTouchEnd.bind(this);
+  _onLayout(event) {
+
+    {
+      let {x,y,width,height} = event.nativeEvent.layout;
+      console.log('width from View onLyout:' + width); //打印宽
+      console.log('height from View onLayout' + height); //打印高
+      console.log('x from View onLayout:' + x);
+      consoel.log('y from View onLayout:' + y);
+    }
+    // 使用解构赋值取得设备屏幕的宽和高,与onLayout函数上根的宽、高做比较
+    let Dimensions = require('Dimensions');
+    let {width,height} = Dimensions.get('window');
+    console.log('width from Demensions:' + width);
+    console.log('height from Demensions:' + height);
+    console.log('x from Text onLayout:' + x);
+    console.log('y from Text onLayout:' + y);
+    console.log('\r\n');
   }
 
-  _onTouchMove(event) {
-    console.log("touch move: " + event.thisStamp + ', X:' + event.nativeEvent.locationX + ', Y' + event.nativeEvent.locationY);
-  }
+  _onLayoutText(event) {
 
-  _onTouchStart(event) {
-    console.log("touch start: " + event.thisStamp + ', X:' + event.nativeEvent.locationX + ', Y' + event.nativeEvent.locationY);
-  }
-
-  _onTouchEnd(event) {
-    console.log("touch end: " + event.thisStamp + ', X:' + event.nativeEvent.locationX + ', Y' + event.nativeEvent.locationY);
+    let {x,y,width,height} = event.nativeEvent.layout;
+    console.log('width from View onLyout:' + width); //打印宽
+    console.log('height from View onLayout' + height); //打印高
+    console.log('x from View onLayout:' + x);
+    consoel.log('y from View onLayout:' + y);
   }
 
   render() {
     return (
-      <View style={styles.container} onTouchStart={this.onTouchStart} onTouchMove={this.onTouchMove} onTouchEnd={this.onTouchEnd}>
+      <View style={styles.container} onLayout={this._onLayout}>
+        <Text style={styles.welcome} onLayout={this._onLayoutText}>
+          Welcome to React Native!
+        </Text>
       </View>
     );
   }
@@ -41,6 +53,13 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyCOntent:'center',
+    alignItems: 'center',
     backgroundColor: '#F5FCEF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign:'center',
+    margin: 10,
   }
 });
