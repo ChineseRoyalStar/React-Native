@@ -18,15 +18,13 @@ export default class App extends Component {
       console.log('width from View onLyout:' + width); //打印宽
       console.log('height from View onLayout' + height); //打印高
       console.log('x from View onLayout:' + x);
-      consoel.log('y from View onLayout:' + y);
+      console.log('y from View onLayout:' + y);
     }
     // 使用解构赋值取得设备屏幕的宽和高,与onLayout函数上根的宽、高做比较
     let Dimensions = require('Dimensions');
     let {width,height} = Dimensions.get('window');
     console.log('width from Demensions:' + width);
     console.log('height from Demensions:' + height);
-    console.log('x from Text onLayout:' + x);
-    console.log('y from Text onLayout:' + y);
     console.log('\r\n');
   }
 
@@ -36,7 +34,7 @@ export default class App extends Component {
     console.log('width from View onLyout:' + width); //打印宽
     console.log('height from View onLayout' + height); //打印高
     console.log('x from View onLayout:' + x);
-    consoel.log('y from View onLayout:' + y);
+    console.log('y from View onLayout:' + y);
   }
 
   render() {
@@ -53,7 +51,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyCOntent:'center',
+    justifyContent:'center',
     alignItems: 'center',
     backgroundColor: '#F5FCEF',
   },
