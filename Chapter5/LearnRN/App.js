@@ -11,37 +11,35 @@ import {StyleSheet, View, Text} from 'react-native';
 
 export default class App extends Component {
  
-  _onLayout(event) {
-
-    {
-      let {x,y,width,height} = event.nativeEvent.layout;
-      console.log('width from View onLyout:' + width); //打印宽
-      console.log('height from View onLayout' + height); //打印高
-      console.log('x from View onLayout:' + x);
-      console.log('y from View onLayout:' + y);
-    }
-    // 使用解构赋值取得设备屏幕的宽和高,与onLayout函数上根的宽、高做比较
-    let Dimensions = require('Dimensions');
-    let {width,height} = Dimensions.get('window');
-    console.log('width from Demensions:' + width);
-    console.log('height from Demensions:' + height);
-    console.log('\r\n');
+  constructor(props) {
+    super(props);
+    this.state = {bigButtonPointerEvents:null};
+    this.onBigButtonPressed = this.onBigButtonPressed.bind(this);
+    this.onSmallButtonPressed = this.onSmallButtonPressed.bind(this);
   }
 
-  _onLayoutText(event) {
+  onBigButtonPressed() {
+    console.log('Big button pressed');
+  }
 
-    let {x,y,width,height} = event.nativeEvent.layout;
-    console.log('width from View onLyout:' + width); //打印宽
-    console.log('height from View onLayout' + height); //打印高
-    console.log('x from View onLayout:' + x);
-    console.log('y from View onLayout:' + y);
+  onSmallButtonPressed() {
+    if (this.state.bigButtonPointerEvents === null) {
+      console.log('big button will not reponde.');
+      this.setState({bigButtonPointerEvents:'none'});
+      return;
+    }
+    console.log('big button will response.');
+    this.setState({bigButtonPointerEvents:null});
   }
 
   render() {
     return (
       <View style={styles.container} onLayout={this._onLayout}>
-        <Text style={styles.welcome} onLayout={this._onLayoutText}>
-          Welcome to React Native!
+        <Text style={styles.sButtonStyle} onPress={this.onSmallButtonPressed}>
+          Small button
+        </Text>
+        <Text style={styles.bButtonStyle} onPress={this.onBigButtonPressed} pointerEvents={this.state.bigButtonPointerEvents}>
+          Big button
         </Text>
       </View>
     );
@@ -51,13 +49,11 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent:'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCEF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign:'center',
-    margin: 10,
+  sButtonStyle: {
+    fontSize:20, left:130, top:50, width:150, height:35, backgroundColor:'grey'
+  },
+  bButtonStyle: {
+    fontSize:20, left:130, top:130, width:150, height:70, backgroundColor:'grey'
   }
 });
