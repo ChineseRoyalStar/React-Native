@@ -7,21 +7,28 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback} from 'react-native';
 
 export default class App extends Component {
 
-  componentWillMount() {
-    this.image1 = require('./girl.png');
+  onButtonPressed() {
+
   }
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.imageStyle} resizeMode={'cover'} source={this.image1} />
-        <Image style={styles.imageStyle} resizeMode={'contain'} source={this.image1} />
-        <Image style={styles.imageStyle} resizeMode={'stretch'} source={this.image1} />
-        <Image style={styles.imageStyle} resizeMode={'center'} source={this.image1} />
-        <Image style={styles.imageStyle} resizeMode={'repeat'} source={this.image1} />
+        {/* <TouchableHighlight onPress={this.onButtonPressed}>
+          <View style={styles.button}/>
+        </TouchableHighlight> */}
+        {/* <TouchableOpacity onPress={this.onButtonPressed} activeOpacity={0.85}>
+          <View style={styles.button}/>
+        </TouchableOpacity> */}
+        {/* <TouchableNativeFeedback onPress={this.onButtonPressed} activeOpacity={0.85}>
+          <View style={styles.button}/>
+        </TouchableNativeFeedback> */}
+        <TouchableWithoutFeedback onPress={this.onButtonPressed} activeOpacity={0.85}>
+          <View style={styles.button}/>
+        </TouchableWithoutFeedback>
       </View>
     );
   }
@@ -30,14 +37,11 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:'grey',
+    backgroundColor:'white',
   },
-  imageStyle: {
-    margin: 2, 
-    backgroundColor: 'white',
-    width: 100,
-    height: 100
+  button: {
+    width: 120,
+    height: 70,
+    backgroundColor: 'grey',
   }
 });
