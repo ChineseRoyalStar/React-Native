@@ -7,18 +7,17 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, Image} from 'react-native';
+
+var aImage = require('./1.png');
 
 export default class App extends Component {
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.barStyle}>
-          我是20号字体
-            <Text style={styles.boldFont}>
-            {'\r\n'}我是加粗20号字体
-            </Text>
+        <Text style={styles.welcome}>
+          Welcome to <Image source={aImage} sytle={styles.imageInTextStyle}/> React Native!
         </Text>
       </View>
     );
@@ -30,16 +29,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent:'center',
     alignItems: 'center',
+    backgroundColor: '#F5FCFF'
   },
-  barStyle: {
+  welcome: {
     fontSize: 20,
     textAlign: 'center',
-    color: 'black',
-    textShadowOffset: {width:5, height:5},
-    textShadowRadius: 2,
-    textShadowColor: 'grey'
+    margin: 10,
   },
-  boldFont: {
-    fontWeight: 'bold'
+  imageInTextStyle: {
+    width: 30,
+    height: 30,
+    resizeMode: 'cover'
   }
 });
