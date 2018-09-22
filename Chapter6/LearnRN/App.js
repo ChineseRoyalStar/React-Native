@@ -12,16 +12,12 @@ import {StyleSheet, View, Text} from 'react-native';
 export default class App extends Component {
 
   render() {
-    let aLongString = "我很长,显示不下怎么办";
     return (
       <View style={styles.container}>
-        <Text style={styles.font20}>
+        <Text style={styles.barStyle}>
           我是20号字体
-            <Text style={styles.boldFont20}>
+            <Text style={styles.boldFont}>
             {'\r\n'}我是加粗20号字体
-              <Text styles={styles.balckBoldFont20}>
-                {'\r\n'}我是加粗黑色20号字体
-              </Text>
             </Text>
         </Text>
       </View>
@@ -35,14 +31,15 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems: 'center',
   },
-  font20: {
+  barStyle: {
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'black',
+    textShadowOffset: {width:5, height:5},
+    textShadowRadius: 2,
+    textShadowColor: 'grey'
   },
-  boldFont20: {
-    fontWeight:'bold'
-  },
-  balckBoldFont20: {
-    color: 'black'
+  boldFont: {
+    fontWeight: 'bold'
   }
 });
