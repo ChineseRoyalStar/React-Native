@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, TextInput, Image} from 'react-native';
 
 var aImage = require('./1.png');
 
@@ -16,9 +16,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to <Image source={aImage} sytle={styles.imageInTextStyle}/> React Native!
-        </Text>
+        <TextInput style={styles.textImputStyle} defaultValue='Ajfg你好' clearButtonMode='while-editing'/>
       </View>
     );
   }
@@ -29,16 +27,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent:'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: 'white'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  imageInTextStyle: {
-    width: 30,
-    height: 30,
-    resizeMode: 'cover'
+  textImputStyle: {
+    width: 200,
+    height: 70,
+    fontSize: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
