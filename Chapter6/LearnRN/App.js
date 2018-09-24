@@ -7,16 +7,51 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, TextInput, Image} from 'react-native';
+import {StyleSheet, View, Text, TextInput, Dimensions, Keyboard} from 'react-native';
 
-var aImage = require('./1.png');
+let totalHeight = Dimensions.get('window').height;
 
 export default class App extends Component {
 
+  constructor(props) {
+    super(props);
+    this.keyboardDidShowListener = null;
+    this.keyboardDidHideListener = null;
+    this.state = {KeyboardShown: false};
+    this.onDismissKeyboard = this.onDismissKeyboard.bind(this);
+  }
+
+  keyboardWillShowHandler(event) {
+    this.setState({KeyboardShown: true});
+  }
+
+  keyboardWillHideHandler(event) {
+    this.setState({KeyboardShown: false});
+  }
+
+  componentWillMount() {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardWillShowHandler.bind(this));
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardWillHideHandler.bind(this));
+  }
+
+  componentWillUnmount() {
+    if (this.keyboardDidShowListener != null) {
+      this.keyboardDidShowListener.remove();
+    }
+    if (this.keyboardDidHideListener != null) {
+      this.keyboardDidHideListener.remove();
+    }
+  }
+  onDismissKeyboard() {
+    Keyboard.dismiss();
+    console.log('is it get focus?' + this.refs.bottomInput.isFocused());
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput style={styles.textImputStyle} defaultValue='Ajfg你好' clearButtonMode='while-editing'/>
+      <View style={[styles.container, this.state.KeyboardShown && styles.bumpedContainer]}>
+        <Text style={styles.buttonStyle} onPress={this.onDismissKeyboard}> Dimiss Keyboard </Text>
+        <TextInput style={styles.textInputStyles} ref='bottomInput' onFocus={() => this.setState({bumpedUp: 0})}/>
       </View>
     );
   }
@@ -25,17 +60,25 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent:'center',
-    alignItems: 'center',
-    backgroundColor: 'white'
   },
-  textImputStyle: {
-    width: 200,
-    height: 70,
-    fontSize: 50,
+  bumpedContainer: {
+    marginBottom: 210,
+    marginTop: -210
+  },
+  buttonStyle: {
+    top: 250,
+    fontSize: 30,
+    backgroundColor: 'grey'
+  },
+  textInputStyles: {
+    position: 'absolute',
+    top: totalHeight - 80,
     borderWidth: 1,
     borderColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center',
+    left: 20,
+    width: 200,
+    height: 30,
+    fontSize: 20,
+    backgroundColor: 'grey',
   }
 });
