@@ -7,37 +7,41 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, TextInput, Dimensions, Keyboard} from 'react-native';
+import {StyleSheet, View, Text, TextInput, Dimensions, Clipboard} from 'react-native';
 
-let totalHeight = Dimensions.get('window').height;
 
 export default class App extends Component {
 
-  componentDidMount() {
-    var aref = this.tempfunc.bind(this);
-    window.setTimeout(aref, 1);
+  constructor(props) {
+    super(props);
+    this.state = {textFromClipboard: ''};
+    this.copyToClipboard = this.copyToClipboard.bind(this);
+    this.pasteFromClipboard = this.pasteFromClipboard.bind(this);
   }
 
-  tempfunc() {
-    this.refs.aTextInputRef.measure(this.getTextInputPosition);
+  pasteFromClipboard() {
+    Clipboard.getString().then(
+      (textFromClipboard)=>{
+        this.setState({textFromClipboard});
+      }
+    ).catch(
+      (error)=>{
+        console.log('pasteFromClipboard error');
+        console.log(error);
+      }
+    );
   }
 
-  getTextInputPosition(fx, fy, width, height, px, py) {
-    console.log('getTextInputPosition');
-    console.log('Component width is:' + width);
-    console.log('Component height is: ' + height);
-    console.log('X offset to frame: ' + fx);
-    console.log('Y offset to frame: ' + fy);
-    console.log('X offset to page: ' + px);
-    console.log('Y offset to page: ' + py);
+  copyToClipboard() {
+    Clipboard.setString('ABCD 你好');
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={{boarderWidth: 1}}>
-          <TextInput style={styles.textInputStyle} ref='aTextInputRef' defaultValue='Ajfg你好'/>
-        </View>
+        <Text style={styles.welcome}>{this.state.textFromClipboard}</Text>
+        <Text style={styles.instructions} onPress={this.copyToClipboard}>Press to Copy something to Clipboard.</Text>
+        <Text style={styles.instructions} onPress={this.pasteFromClipboard}>Press to Paste.</Text>
       </View>
     );
   }
@@ -48,15 +52,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: '#F5FCFF',
+    borderWidth: 1
   },
-  textInputStyle: {
-    width: 200,
-    height: 55,
-    fontSize: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 0,
-    paddingBottom: 0
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 15,
+    backgroundColor: 'grey',
+    fontSize: 30
   }
 });
