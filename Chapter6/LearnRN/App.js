@@ -13,45 +13,31 @@ let totalHeight = Dimensions.get('window').height;
 
 export default class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.keyboardDidShowListener = null;
-    this.keyboardDidHideListener = null;
-    this.state = {KeyboardShown: false};
-    this.onDismissKeyboard = this.onDismissKeyboard.bind(this);
+  componentDidMount() {
+    var aref = this.tempfunc.bind(this);
+    window.setTimeout(aref, 1);
   }
 
-  keyboardWillShowHandler(event) {
-    this.setState({KeyboardShown: true});
+  tempfunc() {
+    this.refs.aTextInputRef.measure(this.getTextInputPosition);
   }
 
-  keyboardWillHideHandler(event) {
-    this.setState({KeyboardShown: false});
-  }
-
-  componentWillMount() {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardWillShowHandler.bind(this));
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardWillHideHandler.bind(this));
-  }
-
-  componentWillUnmount() {
-    if (this.keyboardDidShowListener != null) {
-      this.keyboardDidShowListener.remove();
-    }
-    if (this.keyboardDidHideListener != null) {
-      this.keyboardDidHideListener.remove();
-    }
-  }
-  onDismissKeyboard() {
-    Keyboard.dismiss();
-    console.log('is it get focus?' + this.refs.bottomInput.isFocused());
+  getTextInputPosition(fx, fy, width, height, px, py) {
+    console.log('getTextInputPosition');
+    console.log('Component width is:' + width);
+    console.log('Component height is: ' + height);
+    console.log('X offset to frame: ' + fx);
+    console.log('Y offset to frame: ' + fy);
+    console.log('X offset to page: ' + px);
+    console.log('Y offset to page: ' + py);
   }
 
   render() {
     return (
-      <View style={[styles.container, this.state.KeyboardShown && styles.bumpedContainer]}>
-        <Text style={styles.buttonStyle} onPress={this.onDismissKeyboard}> Dimiss Keyboard </Text>
-        <TextInput style={styles.textInputStyles} ref='bottomInput' onFocus={() => this.setState({bumpedUp: 0})}/>
+      <View style={styles.container}>
+        <View style={{boarderWidth: 1}}>
+          <TextInput style={styles.textInputStyle} ref='aTextInputRef' defaultValue='Ajfg你好'/>
+        </View>
       </View>
     );
   }
@@ -60,25 +46,17 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
-  bumpedContainer: {
-    marginBottom: 210,
-    marginTop: -210
-  },
-  buttonStyle: {
-    top: 250,
-    fontSize: 30,
-    backgroundColor: 'grey'
-  },
-  textInputStyles: {
-    position: 'absolute',
-    top: totalHeight - 80,
-    borderWidth: 1,
-    borderColor: 'red',
-    left: 20,
+  textInputStyle: {
     width: 200,
-    height: 30,
-    fontSize: 20,
-    backgroundColor: 'grey',
+    height: 55,
+    fontSize: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 0,
+    paddingBottom: 0
   }
 });
