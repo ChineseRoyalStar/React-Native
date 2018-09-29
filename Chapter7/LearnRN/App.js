@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, TextInput, Dimensions, Clipboard} from 'react-native';
+import {StyleSheet, View, Text, AsyncStorage} from 'react-native';
 
 let constantData = require('./data/SimpleSample.json');
 
@@ -15,12 +15,30 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    console.log("constantData's type:" + typeof(constantData));
-    console.log("empolyee's type:" + typeof(constantData.employees));
-    console.log("empolyee's length:" + constantData.employees.length);
-    console.log("No.1's givenName:" + constantData.employees[0].givenName);
-    console.log("No.1's salary:" + constantData.employees[0].salary);
-    console.log("Type of No.1's salary:" + typeof(constantData));
+    console.log("<--------- Save Data ---------->");
+    // AsyncStorage.setItem('name', 123).then( //使用Promise机制的方法
+    //   ()=>{ //定义操作成功的处理函数
+    //     // 当操作保存成功后需要做的操作
+    //   } // 不定义rejection状态处理函数,使用Promise机制发生错误时的回调函数
+    // ).catch(
+    //   (error)=>{
+    //     console.log(' error' + error.message);
+    //   }
+    // );
+    AsyncStorage.multiSet([['1', '张三'], ['2','李四']]).then(
+      ()=>{
+       console.log('svae successfully') 
+      }
+    ).catch(
+      (errors)=>{
+        console.log(' errors length: ' + errors.length);
+        if(errors.length > 0) {
+          console.log('1st error message: ' + errors[0].message);
+        }else {
+
+        }
+      }
+    )
   }
 
   render() {
