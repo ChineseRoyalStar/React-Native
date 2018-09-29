@@ -15,28 +15,39 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    console.log("<--------- Save Data ---------->");
-    // AsyncStorage.setItem('name', 123).then( //使用Promise机制的方法
-    //   ()=>{ //定义操作成功的处理函数
-    //     // 当操作保存成功后需要做的操作
-    //   } // 不定义rejection状态处理函数,使用Promise机制发生错误时的回调函数
-    // ).catch(
-    //   (error)=>{
-    //     console.log(' error' + error.message);
+    console.log("<--------- Load Data ---------->");
+    // AsyncStorage.getItem('1').then(
+    //   (result)=>{
+    //     if(result == null) {
+    //       return;
+    //     }
+    //    console.log('Result is ' + result); 
     //   }
-    // );
-    AsyncStorage.multiSet([['1', '张三'], ['2','李四']]).then(
-      ()=>{
-       console.log('svae successfully') 
+    // ).catch(
+    //   (errors)=>{
+    //     console.log('error:' + error.message);
+    //   }
+    // )
+
+    AsyncStorage.getAllKeys().then(
+      (keys)=>{
+        let arrayLen = keys.length;
+        for(let counter=0; counter < arrayLen; counter++) {
+          console.log('key ' + counter + ':' + keys[counter]);
+            AsyncStorage.getItem(keys[counter]).then(
+              (result)=>{
+              console.log('key ' + keys[counter] + ' getItem data:' + result); 
+            }
+          ).catch(
+              (errors)=>{
+                console.log('error:' + error.message);
+              }
+          )
+        }
       }
     ).catch(
-      (errors)=>{
-        console.log(' errors length: ' + errors.length);
-        if(errors.length > 0) {
-          console.log('1st error message: ' + errors[0].message);
-        }else {
-
-        }
+      (error)=>{
+        
       }
     )
   }
