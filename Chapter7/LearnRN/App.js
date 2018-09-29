@@ -16,19 +16,40 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     console.log("<--------- Load Data ---------->");
-    // AsyncStorage.getItem('1').then(
-    //   (result)=>{
-    //     if(result == null) {
-    //       return;
-    //     }
-    //    console.log('Result is ' + result); 
-    //   }
-    // ).catch(
-    //   (errors)=>{
-    //     console.log('error:' + error.message);
-    //   }
-    // )
 
+    this.loadData();
+
+    console.log("<--------- Delete Data ---------->");
+
+    // AsyncStorage.clear()
+    // AsyncStorage.mutiRemove();
+
+    // 修改数据
+    // AyncStorage.mergeItem(aKey, saValue)
+    // AyncStorage.multiMerge(aArray)
+
+    // JSON对象存储
+    // JSON.string(constantData)
+    // JSON.parse(newJSONString)
+
+    AsyncStorage.removeItem('1').then(
+      ()=>{
+
+      }
+    ).catch(
+      (error)=>{
+        console.log('error:' + error.messgae);
+      }
+    )
+
+    console.log("<--------- Reload Data ---------->");
+
+    this.loadData();
+
+    console.log("<--------- End Reload Data ---------->");
+  }
+
+  loadData(){
     AsyncStorage.getAllKeys().then(
       (keys)=>{
         let arrayLen = keys.length;
@@ -51,6 +72,7 @@ export default class App extends Component {
       }
     )
   }
+  
 
   render() {
     return (
