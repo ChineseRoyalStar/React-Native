@@ -21,6 +21,7 @@ export default class App extends Component {
 
     console.log("<--------- Delete Data ---------->");
 
+    // 删除数据
     // AsyncStorage.clear()
     // AsyncStorage.mutiRemove();
 
@@ -31,6 +32,8 @@ export default class App extends Component {
     // JSON对象存储
     // JSON.string(constantData)
     // JSON.parse(newJSONString)
+
+    // AyncStorage API存储数据的无序性
 
     AsyncStorage.removeItem('1').then(
       ()=>{
