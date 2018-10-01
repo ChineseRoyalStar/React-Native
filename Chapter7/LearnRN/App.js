@@ -10,8 +10,8 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 
 import DiaryList from './DiaryList';
-// import DiaryReader from './DiaryReader';
-// import DiaryWriter from './DiaryWriter';
+import DiaryReader from './DiaryReader';
+import DiaryWriter from './DiaryWriter';
 
 export default class App extends Component {
 
@@ -21,19 +21,19 @@ export default class App extends Component {
     );
   }
 
-  // showDiaryReader() {
-  //   return (
-  //     <DiaryReader/>
-  //   );
-  // }
+  showDiaryReader() {
+    return (
+      <DiaryReader/>
+    );
+  }
 
-  // showDiaryWriter() {
-  //   return (
-  //     <DiaryWriter/>
-  //   );
-  // }
+  showDiaryWriter() {
+    return (
+      <DiaryWriter/>
+    );
+  }
 
   render() {
-    return this.showDiaryList();
+    return this.showDiaryWriter();
   }
 }

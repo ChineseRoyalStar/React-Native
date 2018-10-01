@@ -7,89 +7,47 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, AsyncStorage} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Alert, StatusBar} from 'react-native';
 
-let constantData = require('./data/SimpleSample.json');
+import MCV from './MCV';
 
-export default class App extends Component {
+export default class DiaryWriter extends Component {
 
-  constructor(props) {
-    super(props);
-    console.log("<--------- Load Data ---------->");
-
-    this.loadData();
-
-    console.log("<--------- Delete Data ---------->");
-
-    // 删除数据
-    // AsyncStorage.clear()
-    // AsyncStorage.mutiRemove();
-
-    // 修改数据
-    // AyncStorage.mergeItem(aKey, saValue)
-    // AyncStorage.multiMerge(aArray)
-
-    // JSON对象存储
-    // JSON.string(constantData)
-    // JSON.parse(newJSONString)
-
-    // AyncStorage API存储数据的无序性
-
-    AsyncStorage.removeItem('1').then(
-      ()=>{
-
-      }
-    ).catch(
-      (error)=>{
-        console.log('error:' + error.messgae);
-      }
-    )
-
-    console.log("<--------- Reload Data ---------->");
-
-    this.loadData();
-
-    console.log("<--------- End Reload Data ---------->");
+  returnPressed() {
+    Alert.alert(
+      '请确认',
+      '您确定要退回日记列表吗',
+      [
+        {text: '确定'},
+        {text: '取消'}
+      ]
+    );
   }
-
-  loadData(){
-    AsyncStorage.getAllKeys().then(
-      (keys)=>{
-        let arrayLen = keys.length;
-        for(let counter=0; counter < arrayLen; counter++) {
-          console.log('key ' + counter + ':' + keys[counter]);
-            AsyncStorage.getItem(keys[counter]).then(
-              (result)=>{
-              console.log('key ' + keys[counter] + ' getItem data:' + result); 
-            }
-          ).catch(
-              (errors)=>{
-                console.log('error:' + error.message);
-              }
-          )
-        }
-      }
-    ).catch(
-      (error)=>{
-        
-      }
-    )
-  }
-  
 
   render() {
     return (
-      <View style={styles.container}></View>
+      <View style={MCV.container}>
+        <StatusBar hidden={true} />
+          <View style={MCV.firstRow}>
+            <TouchableOpacity onPress={this.returnPressed}>
+              <Text style={MCV.smallButton}>
+                返回
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.returnPressed}>
+              <Text style={MCV.smallButton}>
+                某变量当前按钮文字
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.returnPressed}>
+              <Text style={MCV.smallButton}>
+                保存
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <TextInput style={MCV.titleInputStyle} placeholder={'写个日记标题吧'}/>
+          <TextInput style={MCV.diaryBodyStyle} multiline={true} placeholder={'日记正文请在此输入'}/>
+      </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    borderWidth: 1
-  },
-});
