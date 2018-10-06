@@ -19,17 +19,17 @@ export default class DiaryReader extends Component {
       <View style={MCV.container}>
         <StatusBar hidden={true} />
         <View style={MCV.firstRow}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.props.returnPressed}>
             <Text style={MCV.middleButton}>
               返回
             </Text> 
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.props.readingPreviousPressed}>
             <Text style={MCV.middleButton}>
               上一篇
             </Text> 
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.props.readingNextPressed}>
             <Text style={MCV.middleButton}>
               下一篇
             </Text> 
@@ -37,13 +37,13 @@ export default class DiaryReader extends Component {
         </View>
 
         <View style={MCV.secondRow}>
-          <Image style={MCV.moodStyle} source={angryMood}/>
+          <Image style={MCV.moodStyle} source={this.props.diaryMood}/>
           <View style={MCV.subViewInReader}>
-            <Text style={MCV.textInReader}>日记标题:某变量</Text>
-            <Text style={MCV.textInReader}>时间:某变量</Text>
+            <Text style={MCV.textInReader}>{this.props.diaryTitle}</Text>
+            <Text style={MCV.textInReader}>{this.props.diaryTime}</Text>
           </View>
         </View>
-        <TextInput style={[MCV.diaryAbstractList, {color: 'black'}]} multiline={true} editable={false} value={'某变量记录日记正文'}/>
+        <TextInput style={[MCV.diaryAbstractList, {color: 'black'}]} multiline={true} editable={false} value={this.props.diaryBody}/>
       </View>
     );
   }

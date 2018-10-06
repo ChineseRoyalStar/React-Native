@@ -12,7 +12,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import DiaryList from './DiaryList';
 import DiaryReader from './DiaryReader';
 import DiaryWriter from './DiaryWriter';
-import DataHander from './DataHandler';
+import DataHandler from './DataHandler';
 
 export default class App extends Component {
 
@@ -25,8 +25,16 @@ export default class App extends Component {
       diaryTitle: '读取中......',
       diaryBody: '读取中......'
     };
-    //this.bindAllMyFunction();
-    
+    this.bindAllMyFunction();
+    DataHandler.getAllTheDiary().then(()=>{
+      (result)=>{
+        this.setState(result);
+      }
+    }).catch(
+      (error)=>{
+        console.log(error);
+      }
+    )
   }
 
   bindAllMyFunction(){
@@ -34,45 +42,75 @@ export default class App extends Component {
     this.writeDiary = this.writeDiary.bind(this);
     this.returnPressed = this.returnPressed.bind(this);
     this.saveDiaryAndReturn = this.saveDiaryAndReturn.bind(this);
-    this.readingPreviousPressed = this.readingPrevioudPressed.bind(this);
+    this.readingPreviousPressed = this.readingPreviousPressed.bind(this);
     this.readingNextPressed = this.readingNextPressed.bind(this);
   }
 
   readingPreviousPressed(){
-    
+    let previousDiary = DataHandler.getPrevousDiary();
+    if(previousDiary === null) return;
+    this.setState(previousDiary);
   }
 
   readingNextPressed() {
-
+    let nextDiary = DataHandler.getNextDiary();
+    if(nextDiary === null) return;
+    this.setState(nextDiary);
   }
 
   returnPressed() {
-
+    this.setState({uiCode:1});
   }
 
-  saveDiaryAndReturn() {
-    this.setState({uiCode: 1});
+  saveDiaryAndReturn(newDiaryMood, newDiaryBody, newDiaryTitle) {
+    DataHandler.saveDiary(newDiaryMood, newDiaryBody, newDiaryTitle).then(
+      (result)=>{
+        this.setState(result);
+      }
+    ).catch(
+      (error)=>{
+        console.log(error);
+      }
+    );
+  }
+
+  writeDiary() {
+    this.setState(()=>{
+      return {
+        uiCode:3
+      };
+    });
+  }
+
+  searchKeyword(keyword) {
+    console.log('search keyword is:' + keyword);
+  }
+
+  selectLististItem() {
+    this.setState({uiCode: 2});
   }
 
   showDiaryList() {
     return (
-      <DiaryList/>
+      <DiaryList fakeListTitle={this.diaryTitle} fakeListTime={this.diaryTime} fakeListMood={this.diaryMood} selectLististItem={this.selectLististItem} searchKeyword={this.searchKeyword} writeDiary={this.writeDiary}/>
     );
   }
 
   showDiaryReader() {
     return (
-      <DiaryReader/>
+      <DiaryReader returnToDiaryList={this.returnPressed} diaryTitle={this.state.diaryTitle} diaryMood={this.state.diaryMood} diaryTime={this.state.diaryTime} readingPrevioudPressed={this.readingPreviousPressed} readingNextPressed={this.readingNextPressed} returnPressed={this.returnPressed} diaryBody={this.state.diaryBody}/>
     );
   }
 
   showDiaryWriter() {
     return (
-      <DiaryWriter/>
+      <DiaryWriter returnPressed={this.returnPressed} saveDiary={this.saveDiaryAndReturn}/>
     );
   }
 
   render() {
-    return this.showDiaryWriter();
+    if(this.state.uiCode === 1) return this.showDiaryList();
+    if(this.state.uiCode === 2) return this.showDiaryReader();
+    if(this.state.uiCode === 3) return this.showDiaryWriter();
   }
 }

@@ -14,8 +14,13 @@ import MCV from './MCV';
 
 export default class DiaryList extends Component {  
 
-  updateSearchKeyword() {
-    
+  constructor(props) {
+    super(props);
+    this.updateSearchKeyword = this.updateSearchKeyword.bind(this);
+  }
+
+  updateSearchKeyword(newTest) {
+    this.props.updateSearchKeyword(newText);
   }
 
   render() {
@@ -26,7 +31,7 @@ export default class DiaryList extends Component {
          <View style={{borderWidth: 1}}>
           <TextInput autoCapitalize="none" placeholder='输入搜索关键词' clearButtonMode='while-editing' onChangeText={this.updateSearchKeyword} style={MCV.searchBarTextInput}/>
          </View>
-         <TouchableOpacity>
+         <TouchableOpacity onPress={this.props.writeDiary}>
            <Text style={MCV.middleButton}>
             写日记
            </Text>

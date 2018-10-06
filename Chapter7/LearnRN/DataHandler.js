@@ -64,7 +64,7 @@ export default class DataHandler {
                   let newtitle = DataHandler.realDiaryList[resultsLength].title;
                   let newbody = DataHandler.realDiaryList[resultsLength].body;
                   let ctime =  new Date(DataHandler.realDairyList[resultsLenght].time);
-                  let timeString = '' + ctime.getFullYear + '年' + (ctime.getMonth() + 1) + '月' + ctime.getDate() + '日 星期' + (ctime.getDay() + 1) + ' ' + ctime.getHours() + ':' + ctime.getMinutes();
+                  let timeString = '' + ctime.getFullYear() + '年' + (ctime.getMonth() + 1) + '月' + ctime.getDate() + '日 星期' + (ctime.getDay() + 1) + ' ' + ctime.getHours() + ':' + ctime.getMinutes();
                   let rValue = {
                     diaryMood: newMoodIcon,
                     diaryTime: timeString,
@@ -141,7 +141,7 @@ export default class DataHandler {
     let newTitle = DataHandler.realDairyList[resultsLength].title;
     let newBody = DataHandler.realDairyList[resultsLength].body;
     let ctime = new Date(DataHandler.realDiaryList[resultsLenght].time);
-    let timeString = '' + ctime.getFullYear + '年' + (ctime.getMonth() + 1) + '月' + ctime.getDate() + '日 星期' + (ctime.getDay() + 1) + ' ' + ctime.getHours() + ':' + ctime.getMinutes();
+    let timeString = '' + ctime.getFullYear() + '年' + (ctime.getMonth() + 1) + '月' + ctime.getDate() + '日 星期' + (ctime.getDay() + 1) + ' ' + ctime.getHours() + ':' + ctime.getMinutes();
     return {
       diaryMood: newMoodIcon,
       diaryTime: timeString,
@@ -174,7 +174,7 @@ export default class DataHandler {
     let newTitle = DataHandler.realDairyList[resultsLength].title;
     let newBody = DataHandler.realDairyList[resultsLength].body;
     let ctime = new Date(DataHandler.realDiaryList[resultsLength].time);
-    let timeString = '' + ctime.getFullYear + '年' + (ctime.getMonth() + 1) + '月' + ctime.getDate() + '日 星期' + (ctime.getDay() + 1) + ' ' + ctime.getHours() + ':' + ctime.getMinutes();
+    let timeString = '' + ctime.getFullYear() + '年' + (ctime.getMonth() + 1) + '月' + ctime.getDate() + '日 星期' + (ctime.getDay() + 1) + ' ' + ctime.getHours() + ':' + ctime.getMinutes();
     return {
       diaryMood: newMoodIcon,
       diaryTime: timeString,
@@ -186,7 +186,7 @@ export default class DataHandler {
   static saveDiary(newDiaryMood, newDiaryBody, newDiaryTitle) {
     return new Promise(function(resolve, reject) {
       let currentTime = new Date();
-      let timeString = '' + currentTime.getFullYear + '年' + (currentTime.getMonth() + 1) + '月' + currentTime.getDate() + '日 星期' + (currentTime.getDay() + 1) + ' ' + currentTime.getHours() + ':' + currentTime.getMinutes();
+      let timeString = '' + currentTime.getFullYear() + '年' + (currentTime.getMonth() + 1) + '月' + currentTime.getDate() + '日 星期' + (currentTime.getDay() + 1) + ' ' + currentTime.getHours() + ':' + currentTime.getMinutes();
       let aDiary = Object();
       aDiary.title = newDiaryTitle;
       aDiary.body = newDiaryBody;
