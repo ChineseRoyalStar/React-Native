@@ -7,7 +7,6 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, ScrollView, RefreshControl, View, Text} from 'react-native';
 
 import DiaryList from './DiaryList';
 import DiaryReader from './DiaryReader';
@@ -18,93 +17,109 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.onSrollBeginDrag = this._onSrollBeginDrag.bind(this);
-    this.onSrollEndDrag = this._onScrollEndDrag.bind(this);
-    this.onMomentumScrollBegin = this._onMomentumScrollBegin.bind(this);
-    this.onMomentumScrollEnd = this._onMomentumScrollEnd.bind(this);
-    this.onRefresh = this._onRefresh.bind(this);
-    this.onScroll = this.onScroll.bind(this);
+    this.state = {
+      uiCode:1,
+      diaryList: [],
+      diaryMood: null,
+      diaryTime: '读取中......',
+      diaryTitle: '读取中......',
+      diaryBody: '读取中......'
+    };
+    this.bindAllMyFunction();
+    DataHandler.getAllTheDiary().then(
+      (result)=>{
+        console.log('返回数据:'+result);
+        this.setState({diaryList:result});
+      }
+    ).catch(
+      (error)=>{
+        console.log('读取错误');
+        console.log(error);
+      }
+    )
   }
 
-  _onSrollBeginDrag() {
-    console.log('Begin Drag');
+  bindAllMyFunction(){
+    this.selectLististItem = this.selectLististItem.bind(this);
+    this.writeDiary = this.writeDiary.bind(this);
+    this.returnPressed = this.returnPressed.bind(this);
+    this.saveDiaryAndReturn = this.saveDiaryAndReturn.bind(this);
+    this.readingPreviousPressed = this.readingPreviousPressed.bind(this);
+    this.readingNextPressed = this.readingNextPressed.bind(this);
   }
 
-  _onScrollEndDrag() {
-    console.log('End Drag');
+  readingPreviousPressed(){
+    let previousDiary = DataHandler.getPrevousDiary();
+    if(previousDiary === null) return;
+    this.setState(previousDiary);
   }
 
-  _onMomentumScrollBegin() {
-    console.log('_onMonmentumScrollBegin');
+  readingNextPressed() {
+    let nextDiary = DataHandler.getNextDiary();
+    if(nextDiary === null) return;
+    this.setState(nextDiary);
   }
 
-  _onMomentumScrollEnd() {
-    console.log('_onMomentumScrollEnd');
+  returnPressed() {
+    this.setState({uiCode:1});
   }
 
-  _onRefresh() {
-    console.log('_onRefresh is called');
+  saveDiaryAndReturn(newDiaryMood, newDiaryBody, newDiaryTitle) {
+    DataHandler.saveDiary(newDiaryMood, newDiaryBody, newDiaryTitle).then(
+      (result)=>{
+        this.setState(result);
+      }
+    ).catch(
+      (error)=>{
+        console.log(error);
+      }
+    );
   }
 
-  onScroll(aEvent) {
-    console.log('onScroll is called');
-    console.log(aEvent.nativeEvent);
+  writeDiary() {
+    this.setState(()=>{
+      return {
+        uiCode:3
+      };
+    });
+  }
+
+  searchKeyword(keyword) {
+    console.log('search keyword is:' + keyword);
+  }
+
+  selectLististItem() {
+    this.setState({uiCode: 2});
+  }
+
+  showDiaryList() {
+    return (
+      <DiaryList 
+        fakeListTitle={this.diaryTitle} 
+        fakeListTime={this.diaryTime} 
+        fakeListMood={this.diaryMood} 
+        selectLististItem={this.selectLististItem} 
+        searchKeyword={this.searchKeyword}
+        diaryList={this.state.diaryList}
+        writeDiary={this.writeDiary}/>
+    );
+  }
+
+  showDiaryReader() {
+    return (
+      <DiaryReader returnToDiaryList={this.returnPressed} diaryTitle={this.state.diaryTitle} diaryMood={this.state.diaryMood} diaryTime={this.state.diaryTime} readingPrevioudPressed={this.readingPreviousPressed} readingNextPressed={this.readingNextPressed} returnPressed={this.returnPressed} diaryBody={this.state.diaryBody}/>
+    );
+  }
+
+  showDiaryWriter() {
+    return (
+      <DiaryWriter returnPressed={this.returnPressed} saveDiary={this.saveDiaryAndReturn}/>
+    );
   }
 
   render() {
-    return(
-      <View style={styles.container}>
-      <ScrollView style={styles.scrollView} 
-        onMomentumScrollBegin={this._onMomentumScrollBegin} 
-        onMomentumScrollEnd={this._onMomentumScrollEnd} 
-        onSrollBeginDrag={this._onSrollBeginDrag} 
-        onScroll={this.onScroll} 
-        refreshControl={
-          <RefreshControl refreshing={true} 
-            onRefresh={this._onRefresh} 
-            tintColor='#ff0000' 
-            title='Loading...' 
-            colors={['#ff0000','#00ff00','#0000ff']} 
-            progressBackgroundColor='#ffff000'/>
-          }
-          onScrollEndDrag={this._onScrollEndDrag}>
-        <View style={styles.aView} />
-          <ScrollView horizontal={true} style={styles.midScrollView}>
-            <View style={styles.bView} />
-            <View styls={styles.bView} />
-          </ScrollView>
-        <View style={styles.aView} />
-      </ScrollView>
-    </View>
-    );
+    if(this.state.uiCode === 1) return this.showDiaryList();
+    if(this.state.uiCode === 2) return this.showDiaryReader();
+    if(this.state.uiCode === 3) return this.showDiaryWriter();
   }
 }
-
-var styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    backgroundColor: 'grey'
-  },
-  scrollView: {
-    backgroundColor: '#CCCCCC'
-  },
-  midScrollView: {
-    height: 150,
-    borderWidth: 1,
-    borderColor: 'black'
-  },
-  aView: {
-    margin: 1,
-    padding: 0,
-    backgroundColor: '#eaeaea',
-    height: 375,
-  },
-  bView: {
-    flex: 1,
-    height: 148, 
-    width: 300,
-    borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: 'grey',
-  }
-})
