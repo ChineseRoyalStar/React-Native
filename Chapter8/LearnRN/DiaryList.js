@@ -16,10 +16,28 @@ export default class DiaryList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      diaryListDataSource: new ListView.DataSource({rowHasChanged:(oldRow, newRow)=>oldRow !== newRow})
+      diaryListDataSource: new ListView.DataSource({rowHasChanged:(oldRow, newRow)=>oldRow !== newRow, sectionHeaderHasChanged:(oldSH, newSH)=>oldSH !== newSH})
     };
     this.updateSearchKeyword = this.updateSearchKeyword.bind(this);
     this.renderListItem = this.renderListItem.bind(this);
+    this.renderSectionHeader = this.renderSectionHeader.bind(this);
+    this.renderSeparator = this.renderSeparator.bind(this);
+    this.renderHeader = this.renderHeader.bind(this);
+    this.renderFooter = this.renderFooter.bind(this);
+
+    let newListWithSection = [];
+    let sec1 = '分区1';
+    let sec2 = '分区2';
+    let sec3 = '分区3';
+    newListWithSection[sec1] = this.props.diaryList;
+    newListWithSection[sec2] = this.props.diaryList;
+    newListWithSection[sec3] = this.props.diaryList;
+    let fakeSections = [sec1, sec2, sec3];
+
+    this.setState(()=>{
+      return {
+        listDS: this.state.listDS.cloneWithRowsAndSections(newListWithSection, fakeSections)};
+    });
   }
 
   componentWillMount() {
@@ -38,7 +56,6 @@ export default class DiaryList extends Component {
   }
 
   render() {
-    console.log('list的datasource'+this.props.diaryList.length);
     return (
       <View style={MCV.container}>
         <StatusBar hidden={true}/>
@@ -56,7 +73,12 @@ export default class DiaryList extends Component {
           (
             (this.props.diaryList.length !== 0)?
             (
-              <ListView dataSource={this.state.diaryListDataSource} renderRow={this.renderListItem}>
+              <ListView dataSource={this.state.diaryListDataSource} 
+                renderRow={this.renderListItem} 
+                renderSectionHeader={this.renderSectionHeader}
+                renderSeparator={this.renderSeparator} 
+                renderHeader={this.renderHeader} 
+                renderFooter={this.renderFooter}>
               </ListView>
             ):
             (
@@ -82,6 +104,38 @@ export default class DiaryList extends Component {
         </View>
       </TouchableOpacity>
     );
+  }
+
+  renderSectionHeader(sectionData, sectionID) {
+    return (
+      <View style={MCV.section}>
+        <Text style={MCV.sectionText}>{sectionID}</Text>
+      </View>
+    )
+  }
+
+  renderHeader() {
+    return(
+      <View style={MCV.section}>
+        <Text style={MCV.sectionText}>我是Header</Text>
+      </View>
+    )
+  }
+
+  renderFooter() {
+    return(
+      <View style={MCV.section}>
+        <Text style={MCV.sectionText}>我是Footer</Text>
+      </View>
+    )
+  }
+
+  renderSeparator() {
+    return(
+      <View style={MCV.section}>
+        <Text style={MCV.sectionText}>我是Separator</Text>
+      </View>
+    )
   }
 }
 

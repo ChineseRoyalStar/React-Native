@@ -102,6 +102,15 @@ let MCV = StyleSheet.create({
         paddingTop: 0,        //如果不设置，在Android平台TextInput组件内输入显示异常
         paddingBottom: 0,     //如果不设置，在Android平台TextInput组件内输入显示异常        
         fontSize: 14,
+    },
+    section: {
+        flex:1,
+        height: 50,
+        backgroundColor: 'yellow'
+    },
+    sectionText: {
+        flex:1,
+        height: 50
     }
 });
 export { MCV as default };
