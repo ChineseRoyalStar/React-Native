@@ -7,29 +7,25 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, View, ProgressViewIOS} from 'react-native';
+import {AppRegistry, StyleSheet, View, Switch} from 'react-native';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {progress: 0};
-    this.progressTimer = null;
-    this.updateProgress = this.updateProgress.bind(this);
+    this.state = {aSwitch: true};
+    this.onSwitchChanged = this.onSwitchChanged.bind(this);
   }
-  componentDidMount() {
-    this.updateProgress();
-  }
-  updateProgress() {
-    var progress = (this.state.progress + 0.0025) % 1;
-    this.setState({progress});
-    this.progressTimer = window.requestAnimationFrame(() => this.updateProgress());
-  }
-  componentWillUnmount() {
-    window.cancelAnimationFrame(this.progressTimer);
+  onSwitchChanged() {
+    this.setState(()=>{
+      return ({aSwitch: !this.state.aSwitch});
+    });
   }
   render() {
     return(
-      <ProgressViewIOS style={{top: 100}} progress={this.state.progress} progressTintColor={'red'}/>
+      <View>
+        <Switch style={{margin: 20}} onValueChange={this.onSwitchChanged} value={this.state.aSwitch} />
+        <Switch style={{margin: 20}} onValueChange={this.onSwitchChanged} value={!this.state.aSwitch} />
+      </View>
     );
   }
 }
