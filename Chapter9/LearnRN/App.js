@@ -7,16 +7,29 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, View, ActivityIndicator} from 'react-native';
+import {AppRegistry, StyleSheet, View, ProgressViewIOS} from 'react-native';
 
 export default class App extends Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {progress: 0};
+    this.progressTimer = null;
+    this.updateProgress = this.updateProgress.bind(this);
+  }
+  componentDidMount() {
+    this.updateProgress();
+  }
+  updateProgress() {
+    var progress = (this.state.progress + 0.0025) % 1;
+    this.setState({progress});
+    this.progressTimer = window.requestAnimationFrame(() => this.updateProgress());
+  }
+  componentWillUnmount() {
+    window.cancelAnimationFrame(this.progressTimer);
+  }
   render() {
     return(
-      <View style={{top: 40}} >
-        <ActivityIndicator animating={true} color={'blue'} size={'large'} />
-        <ActivityIndicator animating={true} color={'blue'} size={'small'} />
-      </View>
+      <ProgressViewIOS style={{top: 100}} progress={this.state.progress} progressTintColor={'red'}/>
     );
   }
 }
