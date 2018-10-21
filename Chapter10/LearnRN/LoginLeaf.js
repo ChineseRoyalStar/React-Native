@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Dimensions,PixelRatio, TextInput, Alert} from 'react-native';
+import {Platform, StyleSheet, Text, View, Dimensions,PixelRatio, TextInput, Image} from 'react-native';
 
 const {height, width} = Dimensions.get('window');
 const pixelRatio = PixelRatio.get();
@@ -15,7 +15,10 @@ let widthOfMargin = Dimensions.get('window').width * 0.05;
 
 export default class LoginLeaf extends Component {
   static navigationOptions = {
-    title: '登录',
+    drawerLabel: 'Login',
+    drawerIcon: ({tintColor}) => (
+      <Image source = {require('./all.png')} style={[styles.icon, {tintColor: tintColor}]}/>
+    )
   };
   constructor(props) {
     super(props);
@@ -23,9 +26,7 @@ export default class LoginLeaf extends Component {
       inputedNum: '',
       inputedPW: ''
     }; 
-    //this.updatePW = this.updatePW.bind(this);
     this.updateNum = this.updateNum.bind(this);
-    this.jumpToWaiting = this.jumpToWaiting.bind(this);
   }
   updateNum(newText) {
     this.setState((oldState) => {
@@ -44,11 +45,6 @@ export default class LoginLeaf extends Component {
   }
 
   render() {
-    let aValue;
-    console.log('Render has beee excuted.');
-    console.log('Screen height is:' + height);
-    console.log('aValue is:' + aValue);
-    console.log('The type of aValue is:' + typeof(aValue));
     return (
       <View style={styles.container}>
         <TextInput style={styles.textInputStyle} placeholder={'请输入手机号'} onChangeText={this.updateNum}/>
@@ -83,15 +79,16 @@ export default class LoginLeaf extends Component {
     //   }
     // );
 
-    Alert.alert(
-      '提示',
-      '确定使用'+this.state.inputedNum+'号码登录吗?',
-      [
-        {text: '取消', onPress:(()=>{}), style: 'cancel'},
-        {text: '确定', onPress: this.jumpToWaiting}
-      ]
-    );
-   
+    // Alert.alert(
+    //   '提示',
+    //   '确定使用'+this.state.inputedNum+'号码登录吗?',
+    //   [
+    //     {text: '取消', onPress:(()=>{}), style: 'cancel'},
+    //     {text: '确定', onPress: this.jumpToWaiting}
+    //   ]
+    // );
+    //this.props.navigation.navigate('DrawerOpen') deprecated
+    this.props.navigation.openDrawer();
   }
 
   jumpToWaiting() {
@@ -176,4 +173,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30
   },
+  icon: {
+    width: 24,
+    height: 24,
+  }
 });
