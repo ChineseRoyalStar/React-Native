@@ -2,16 +2,21 @@
 
 import {AppRegistry} from 'react-native';
 import {name as appName} from './app.json';
-import {StackNavigator} from 'react-navigation';
+import {StackNavigator, TabNavigator} from 'react-navigation';
 import LoginLeaf from './LoginLeaf';
 import WaitingLeaf from './WaitingLeaf';
+import Mine from './Mine';
 
-const SimpleApp = StackNavigator({
-    Home: {screen: LoginLeaf},
+const MainScreenNavigator = StackNavigator({
+    Login: {screen: LoginLeaf},
     Wait: {screen: WaitingLeaf},
 },{
     cardStyle: 'modal',
-   // headerMode: 'none'
+});
+
+const SimpleApp = TabNavigator({
+    Home: {screen: MainScreenNavigator, },
+    Mine: {screen: Mine, }
 })
 
 AppRegistry.registerComponent(appName, () => SimpleApp);
