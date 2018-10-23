@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Dimensions, PanResponder, ProgressViewIOS, Text, ProgressBarAndroid, Platform, View} from 'react-native';
+import {AppRegistry, StyleSheet, Dimensions, PanResponder, Platform, View} from 'react-native';
 
 var totalWidth = Dimensions.get('window').width;
 
@@ -15,9 +15,17 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.watcher = null;
-    this.state = {progress: 0};
+    this.startFromLeft = true;
+    this.moveNeedhandle = false;
+    this.state = {
+      leftViewWidth: 0,
+      rightViewWidth: totalWidth-40,
+      leftViewColor: 'grey',
+      rightViewColor: 'grey'
+    };
     this._onPanResponderGrant = this._onPanResponderGrant.bind(this);
     this._onPanResponderMove = this._onPanResponderMove.bind(this);
+    this._onPanResponderEnd = this._onPanResponderEnd.bind(this);
   }
 
   componentWillMount() {
@@ -25,71 +33,78 @@ export default class App extends Component {
       onStartShouldSetPanResponder: () => true,
       onPanResponderGrant: this._onPanResponderGrant,
       onPanResponderMove: this._onPanResponderMove,
+      onPanResponderEnd: this._onPanResponderEnd,
     });
   }
 
   _onPanResponderGrant(e, gestureState) {
     let touchPointX = gestureState.x0;
-    let progress;
-    if (touchPointX < 20) progress = 0;
-    else {
-      if (touchPointX > (totalWidth-40)) progress = 1;
-      else progress = (touchPointX - 20) / (totalWidth - 40);
+    if (touchPointX < 20) return;
+    if (touchPointX > totalWidth - 20) return;
+    if ((touchPointX > 90) && (touchPointX < (totalWidth - 90))) return;
+
+    this.moveNeedhandle = true;
+    if (touchPointX < 90) {
+      this.startFromLeft = true;
+      let leftViewWidth = touchPointX - 20;
+      let rightViewWidth = totalWidth - 40 - leftViewWidth;
+      let leftViewColor = 'green';
+      this.setState({leftViewColor, leftViewWidth, rightViewWidth});
     }
-    this.setState({progress});
+
+    this.startFromLeft = false;
+    let rightViewWidth = totalWidth - touchPointX - 20;
+    let leftViewWidth = totalWidth - 40 - rightViewWidth;
+    let rightViewColor = 'red';
+    this.setState({rightViewColor, leftViewWidth, rightViewWidth});
   }
 
   _onPanResponderMove(e, gestureState) {
+    if (!this.moveNeedhandle) return;
     let touchPointX = gestureState.moveX;
-    let progress;
-    if (touchPointX < 20) progress = 0;
-    else {
-      if (touchPointX > (totalWidth-40)) progress = 1;
-      else progress = (touchPointX - 20) / (totalWidth - 40);
+    if(this.startFromLeft) {
+      let leftViewWidth = touchPointX - 20;
+      let rightViewWidth = totalWidth - 40 - leftViewWidth;
+      let leftViewColor = 'green';
+      this.setState({leftViewColor, leftViewWidth, rightViewWidth});
+      return;
+    }else {
+      let rightViewWidth = totalWidth - touchPointX - 20;
+      let leftViewWidth = totalWidth - 40 - rightViewWidth;
+      let rightViewColor = 'red';
+      this.setState({rightViewColor, leftViewWidth, rightViewWidth});
+      return;
     }
-    this.setState({progress});
   }
 
+  _onPanResponderEnd(e, gestureState) {
+    this.moveNeedhandle = false;
+    this.setState({rightViewColor: 'grey', leftViewColor: 'grey', leftViewWidth: 0, rightViewWidth: totalWidth - 40})
+  }
   render() {
     return(
       <View style={styles.container}>
-        {
-          (
-            (Platform.OS === 'ios') ? 
-            (
-              <ProgressViewIOS style={styles.ProgressViewStyle} progress={this.state.progress}/>
-            ):(
-              <ProgressBarAndroid style={styles.ProgressViewStyle} styleAttr="Horizontal" indeterminate={false} progress={this.state.progress} />
-            )
-          )
-        }
-        <Text style={styles.textStyle}>你选择了{Math.round(this.state.progress*100)}%</Text>
-        <View style={styles.touchViewStyle} {...this.watcher.panHandlers} />
+        <View style={styles.barViewStyle} {...this.watcher.panHandlers} >
+          <View style={[styles.setHeightStyle, {width: this.state.leftViewWidth, backgroundColor: this.state.leftViewColor}]}/>
+          <View style={[styles.setHeightStyle, {width: this.state.rightViewWidth, backgroundColor: this.state.rightViewColor}]}/>
+        </View>
       </View>
     );
   }
 }
 
 var styles = StyleSheet.create({
-  ProgressViewStyle: {
+  barViewStyle: {
     width: totalWidth - 40,
+    height: 50,
     left: 20,
     top: 50,
+    flexDirection: 'row'
   },
   container: {
     flex: 1
   },
-  touchViewStyle: {
-    width: totalWidth - 20,
-    height: 40,
-    backgroundColor: 'transparent',
-    position: 'absolute',
-    left: 10,
-    top: 32,
-  },
-  textStyle: {
-    fontSize: 30,
-    left: 20,
-    top: 70,
+  setHeightStyle: {
+    height: 50
   }
 });
