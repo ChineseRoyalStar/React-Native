@@ -15,13 +15,9 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.watcher = null;
-    this.startFromLeft = true;
-    this.moveNeedhandle = false;
+    this.startX = 0;
     this.state = {
-      leftViewWidth: 0,
-      rightViewWidth: totalWidth-40,
-      leftViewColor: 'grey',
-      rightViewColor: 'grey'
+      leftPoint: 1
     };
     this._onPanResponderGrant = this._onPanResponderGrant.bind(this);
     this._onPanResponderMove = this._onPanResponderMove.bind(this);
@@ -38,55 +34,37 @@ export default class App extends Component {
   }
 
   _onPanResponderGrant(e, gestureState) {
-    let touchPointX = gestureState.x0;
-    if (touchPointX < 20) return;
-    if (touchPointX > totalWidth - 20) return;
-    if ((touchPointX > 90) && (touchPointX < (totalWidth - 90))) return;
-
-    this.moveNeedhandle = true;
-    if (touchPointX < 90) {
-      this.startFromLeft = true;
-      let leftViewWidth = touchPointX - 20;
-      let rightViewWidth = totalWidth - 40 - leftViewWidth;
-      let leftViewColor = 'green';
-      this.setState({leftViewColor, leftViewWidth, rightViewWidth});
-    }
-
-    this.startFromLeft = false;
-    let rightViewWidth = totalWidth - touchPointX - 20;
-    let leftViewWidth = totalWidth - 40 - rightViewWidth;
-    let rightViewColor = 'red';
-    this.setState({rightViewColor, leftViewWidth, rightViewWidth});
+    this.startX = gestureState.x0;
   }
 
   _onPanResponderMove(e, gestureState) {
-    if (!this.moveNeedhandle) return;
-    let touchPointX = gestureState.moveX;
-    if(this.startFromLeft) {
-      let leftViewWidth = touchPointX - 20;
-      let rightViewWidth = totalWidth - 40 - leftViewWidth;
-      let leftViewColor = 'green';
-      this.setState({leftViewColor, leftViewWidth, rightViewWidth});
-      return;
+    let leftPoint;
+    if (gestureState.moveX < this.startX) {
+      leftPoint = 1;
     }else {
-      let rightViewWidth = totalWidth - touchPointX - 20;
-      let leftViewWidth = totalWidth - 40 - rightViewWidth;
-      let rightViewColor = 'red';
-      this.setState({rightViewColor, leftViewWidth, rightViewWidth});
-      return;
+      if (gestureState.moveX > totalWidth - 42 - 48 + this.startX) {
+        leftPoint = totalWidth - 42 - 48;
+      }
+      else {
+        leftPoint = gestureState.moveX - this.startX;
+      }
     }
+    this.setState(()=>{
+      return {leftPoint};
+    });
   }
 
   _onPanResponderEnd(e, gestureState) {
-    this.moveNeedhandle = false;
-    this.setState({rightViewColor: 'grey', leftViewColor: 'grey', leftViewWidth: 0, rightViewWidth: totalWidth - 40})
+    let leftPoint = 1;
+    this.setState(()=>{
+      return {leftPoint};
+    })
   }
   render() {
     return(
       <View style={styles.container}>
-        <View style={styles.barViewStyle} {...this.watcher.panHandlers} >
-          <View style={[styles.setHeightStyle, {width: this.state.leftViewWidth, backgroundColor: this.state.leftViewColor}]}/>
-          <View style={[styles.setHeightStyle, {width: this.state.rightViewWidth, backgroundColor: this.state.rightViewColor}]}/>
+        <View style={styles.barViewStyle}>
+          <View style={[styles.buttonViewStyle, {left: this.state.leftPoint}]} {...this.watcher.panHandlers}/>
         </View>
       </View>
     );
@@ -97,6 +75,8 @@ var styles = StyleSheet.create({
   barViewStyle: {
     width: totalWidth - 40,
     height: 50,
+    backgroundColor: 'grey',
+    borderRadius: 25,
     left: 20,
     top: 50,
     flexDirection: 'row'
@@ -104,7 +84,12 @@ var styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  setHeightStyle: {
-    height: 50
+  buttonViewStyle: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: 'white',
+    left: 1,
+    top: 1
   }
 });
