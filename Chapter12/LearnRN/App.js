@@ -7,51 +7,64 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Dimensions, PanResponder, View, Image} from 'react-native';
+import {AppRegistry, StyleSheet, Dimensions, PanResponder, View, Text} from 'react-native';
 
 export default class App extends Component {
  
-  componentWillMount() {
-
-    let REQUEST_URL = 'https://www.sojson.com/open/api/lunar/json.shtml';
-    let map = {
-      method: 'GET'
-    };
-
-    let privateHeaders = {
-      'Private-header1':'value1',
-      'Private-header2':'value2',
-      'Content-Type':"text/plain",
-      'User-Agent':'textAgent'
-    }
-    map.headers = privateHeaders;
-    map.follow = 20;
-    map.timeout = 0;
-    map.size = 0;
-    fetch(REQUEST_URL).then(
-      (result) => {
-        console.log(result.url);
-        console.log(result.ok);
-        console.log(result.status);
-        console.log(result.statusText);
-        result.json().then(
-          (obj)=>{
-            console.log('the response body after json.');
-            console.log(obj);
-          }
-        ).catch(
-          (error)=>{
-            console.log('a error occour while parse response body.');
-            console.log(error);
-          }
-        )
-      }
-    ).catch((error)=> {
-      console.log('error:'+error);
-    })
+  constructor(props) {
+    super(props);
+    this.ws = null;
+    this.sendPressed = this.sendPressed.bind(this);
   }
+
+  componentWillMount() {
+    this.ws = new WebSocket('ws://192.168.199.162:8281');
+    this.ws.onopen = ()=> {
+      console.log('on open is called.');
+      console.log('the ws ready state in onpen is:' + this.ws.readyState);
+    };
+    this.ws.onmessage = (msg)=> {
+      console.log(msg);
+      console.log('on message is called, message:' + msg.data);
+    };
+    this.ws.onclose = ()=> {
+      console.log('Websocket connection closed.');
+    };
+    this.ws.onerror = (e)=> {
+      console.log(e);
+    };
+  }
+
+  componentWillUnmount() {
+    this.ws.close(1000, "Closing normally");
+  }
+  
+  sendPressed() {
+    console.log('message click');
+    console.log(this.ws.readyState);
+    this.ws.send('something');
+  }
+
   render(){
-    return null;
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome} onPress={this.sendPressed}>Press to send message</Text>
+      </View>
+    );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 30,
+    textAlign: 'center',
+    backgroundColor: 'grey',
+  }
+});
 
