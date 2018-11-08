@@ -15,7 +15,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
-        <WebView ref='webViewRef' automaticallyAdjustContentInsets={false} style={styles.webView} source={require('./A.html')} javaScriptEnabled={true} domStorageEnabled={true} onNavigationStateChange={this.onNavigationStateChange} startInLoadingState={true}/>
+        <WebView automaticallyAdjustContentInsets={false} style={styles.webView} source={require('./A.html')} javaScriptEnabled={true} domStorageEnabled={true} startInLoadingState={true}/>
       </View>
     );
   }
