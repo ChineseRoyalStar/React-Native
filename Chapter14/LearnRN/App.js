@@ -7,40 +7,22 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Image, View, Text, CameraRoll, TouchableHighlight} from 'react-native';
+import {AppRegistry, StyleSheet, Image, View, Text, ScrollView, CameraRoll, TouchableHighlight} from 'react-native';
 
 export default class App extends Component {
 
   constructor(props) {
     super(props) 
-    this.state = {image: null};
-    this.fetchParams = {first: 1};
-    this.nextPic = this.nextPic.bind(this);
-    this.count = 1;
+    this.state = {images: []};
+    this.fetchParams = {first: 30};
   }
 
   componentWillMount() {
-    this.fetchParams = {first: 50};
     CameraRoll.getPhotos(this.fetchParams).then(
       (data) => {
-        let image = data.edges[0].node.image;
-        this.setState({image});
-      }
-    ).catch(
-      (error) => {
-        console.log('a error occur while get photos.');
-        console.log(error);
-      }
-    );
-  }
-
-  nextPic() {
-    this.count = this.count + 1;
-    let number = this.count;
-    CameraRoll.getPhotos(this.fetchParams).then(
-      (data) => {
-        let image = data.edges[this.count].node.image;
-        this.setState({image});
+        const assets = data.edges;
+        const images = assets.map((asset) => asset.node.image);
+        this.setState({images});
       }
     ).catch(
       (error) => {
@@ -52,11 +34,12 @@ export default class App extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableHighlight onPress={this.nextPic}>
-          <Image source={this.state.image} style={styles.imageStyle}/>
-        </TouchableHighlight>
-      </View>
+      <ScrollView style={styles.container}>
+        <View style={styles.imageGrid}>
+          {this.state.images.map((image) => 
+            <Image style={styles.image} source={{uri: image.uri}} key={image.uri} />)}
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -64,16 +47,17 @@ export default class App extends Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF'
   },
-  btnStyle: {
-    height: 20,
-    width: 200,
+  imageGrid: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center'
   },
-  imageStyle: {
-    width: 300,
-    height: 500
+  image: {
+    width: 100,
+    height: 100,
+    margin: 10
   }
 })
