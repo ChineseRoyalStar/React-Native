@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Image, View, Text, ScrollView, CameraRoll, Platform} from 'react-native';
+import {AppRegistry, StyleSheet, Image, View, Text, ScrollView, CameraRoll, Platform, ImageEditor} from 'react-native';
 
 let postServerUri = 'http://192.168.199.162:8888/upload';
 
@@ -43,30 +43,32 @@ export default class App extends Component {
           console.log('there is no jpeg file!');
           return;
         }
-        if ( Platform.OS === 'iOS') image.filename = 'b.png'//'b.jpg';
-        this.setState({image});
-        let body = new FormData();
-        body.append('photo', {
-          uri: image.uri,
-          name: image.filename,
-          filename: image.filename,
-          type: 'image/png'//'image/jpg'
-        });
-        body.append('Content-Type', 'image/png'); //'image/jpg'
-        let aObj = {
-          method: 'POST',
-          header: {
-            "Content-Type": "multipart/form-data"
-          },
-          body:body
-        }
-        fetch(postServerUri, aObj).then(
-          (result) => {
-            console.log(result);
-          }
-        ).catch(
-          (error) => console.log(error)
-        );
+        this.cropImage(image);
+        
+        // if ( Platform.OS === 'iOS') image.filename = 'b.png'//'b.jpg';
+        // this.setState({image});
+        // let body = new FormData();
+        // body.append('photo', {
+        //   uri: image.uri,
+        //   name: image.filename,
+        //   filename: image.filename,
+        //   type: 'image/png'//'image/jpg'
+        // });
+        // body.append('Content-Type', 'image/png'); //'image/jpg'
+        // let aObj = {
+        //   method: 'POST',
+        //   header: {
+        //     "Content-Type": "multipart/form-data"
+        //   },
+        //   body:body
+        // }
+        // fetch(postServerUri, aObj).then(
+        //   (result) => {
+        //     console.log(result);
+        //   }
+        // ).catch(
+        //   (error) => console.log(error)
+        // );
       }
     ).catch(
       (error) => {
@@ -76,6 +78,27 @@ export default class App extends Component {
     );
   }
 
+  cropImageDone(aUri) {
+    console.log('edit Done, uri:' + aUri);
+    let newImage = {uri:aUri};
+    this.setState({image:newImage});
+  }
+
+  cropImageFailed(error) {
+    console.log('edit failed:');
+    console.log(error);
+  }
+
+  cropImage(image) {
+    let cropData = {
+      offset:{x:0, y:0},
+      size: {width: 200, height: 200},
+      displaySize: {width: 300, height:500},
+      resizeMode:'contain',
+    }
+    ImageEditor.cropImage(image, cropData, this.cropImageDone.bind(this), this.cropImageFailed.bind(this));
+  }
+
   render() {
     return (
         <View style={styles.container}>
@@ -83,6 +106,7 @@ export default class App extends Component {
         </View>
     );
   }
+
 }
 
 var styles = StyleSheet.create({
