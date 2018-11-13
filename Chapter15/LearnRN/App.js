@@ -1,4 +1,4 @@
-/**
+  /**
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, DatePickerIOS, View} from 'react-native';
+import {AppRegistry, StyleSheet, Picker, View, Text} from 'react-native';
 
 let postServerUri = 'http://192.168.2.105:8888/upload';
 
@@ -15,39 +15,22 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      date1: new Date(),
-      date2: new Date(),
-      date3: new Date(),
-    }
-    this.timeZoneOffsetInHours = 8 * 60;
-    console.log(this.timeZoneOffsetInHours);
-    this.onDateChange1 = this.onDateChange1.bind(this);
-    this.onDateChange2 = this.onDateChange2.bind(this);
-    this.onDateChange3 = this.onDateChange3.bind(this);
+    this.state = {choice: ''};
+    this.options = ['选项一','选项二','选项三','选项四','选项五'];
+    this.onValueChange = this.onValueChange.bind(this);
   }
 
-  onDateChange1(date1) {
-    console.log("event1"+date1);
-    this.setState({date1});
-  }
-
-  onDateChange2(date2) {
-    console.log("event1"+date2);
-    this.setState({date2});
-  }
-
-  onDateChange3(date3) {
-    console.log("event1"+date3);
-    this.setState({date3});
+  onValueChange(choice, noUse) {
+    this.setState({choice});
   }
 
   render(){
     return (
       <View style={styles.container}>
-       <DatePickerIOS date={this.state.date1} mode="datetime" timeZoneOffsetInMinutes={this.timeZoneOffsetInHours} onDateChange={this.onDateChange1} />
-       <DatePickerIOS date={this.state.date2} mode="date" onDateChange={this.onDateChange2} />
-       <DatePickerIOS date={this.state.date3} mode="time" onDateChange={this.onDateChange3} />
+        <Picker sytle={styles.picker} selectedValue={this.state.choice} onValueChange={this.onValueChange} itemStyle={styles.pickerItemStyle}>
+        {this.options.map((aOption) => <Picker.Item label={aOption} value={aOption} key={aOption}/>)}
+        </Picker>
+        <Text style={styles.textStyle}>{'\r\n\r\n\r\n\r\n\r\n'}你选择了:{this.state.choice}</Text>
       </View>
     );
   }
@@ -56,11 +39,21 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'grey'
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF'
   },
-  webView: {
-    backgroundColor: 'white',
-    height: 350,
+  picker: {
+    width: 200,
+    height: 600,
+  },  
+  pickerItemStyle: {
+    width: 100,
+    height: 600,
+  }, 
+  textStyle: {
+    width: 200,
+    height: 50,
   }
 });
 
