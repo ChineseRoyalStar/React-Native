@@ -7,10 +7,9 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Picker, View, Text} from 'react-native';
+import {AppRegistry, StyleSheet, PickerIOS, View, Text} from 'react-native';
 
 let postServerUri = 'http://192.168.2.105:8888/upload';
-
 export default class App extends Component {
 
   constructor(props) {
@@ -26,34 +25,21 @@ export default class App extends Component {
 
   render(){
     return (
-      <View style={styles.container}>
-        <Picker sytle={styles.picker} selectedValue={this.state.choice} onValueChange={this.onValueChange} itemStyle={styles.pickerItemStyle}>
-        {this.options.map((aOption) => <Picker.Item label={aOption} value={aOption} key={aOption}/>)}
-        </Picker>
-        <Text style={styles.textStyle}>{'\r\n\r\n\r\n\r\n\r\n'}你选择了:{this.state.choice}</Text>
+      <View>
+        <PickerIOS selectedValue={this.state.choice} onValueChange={this.onValueChange}>
+        {this.options.map((aOption) => <PickerIOS.PickerItemIOS label={aOption} value={aOption} key={aOption}/>)}
+        </PickerIOS>
+        <Text style={styles.welcome}>你选择了:{this.state.choice}</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  picker: {
-    width: 200,
-    height: 600,
-  },  
-  pickerItemStyle: {
-    width: 100,
-    height: 600,
-  }, 
-  textStyle: {
-    width: 200,
-    height: 50,
+  welcome: {
+    fontSize: 30,
+    textAlign: 'center',
+    margin: 30,
   }
 });
 
