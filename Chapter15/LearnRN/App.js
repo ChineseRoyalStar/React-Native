@@ -7,39 +7,40 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, PickerIOS, View, Text} from 'react-native';
+import {Slider, View, Text} from 'react-native';
 
-let postServerUri = 'http://192.168.2.105:8888/upload';
 export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {choice: ''};
-    this.options = ['选项一','选项二','选项三','选项四','选项五'];
+    this.state = {aValue: 0};
     this.onValueChange = this.onValueChange.bind(this);
+    this.onSlidingComplete = this.onSlidingComplete.bind(this);
   }
 
-  onValueChange(choice, noUse) {
-    this.setState({choice});
+  componentDidMount() {
+  }
+
+  onValueChange(aValue) {
+    this.setState({aValue});
+  }
+
+  onSlidingComplete(aValue) {
+    this.setState({aValue});
+    console.log('complete, value:' + aValue);
+  }
+
+  componentWillMount() {
+    window.cancelAnimationFrame(this.progressTimer);
   }
 
   render(){
     return (
       <View>
-        <PickerIOS selectedValue={this.state.choice} onValueChange={this.onValueChange}>
-        {this.options.map((aOption) => <PickerIOS.PickerItemIOS label={aOption} value={aOption} key={aOption}/>)}
-        </PickerIOS>
-        <Text style={styles.welcome}>你选择了:{this.state.choice}</Text>
+        <Slider style={{margin:30}} disabled={false} onValueChange={this.onValueChange} onSlidingComplete={this.onSlidingComplete}/>
+        <Text>{'    '}你选择了{this.state.aValue}</Text>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  welcome: {
-    fontSize: 30,
-    textAlign: 'center',
-    margin: 30,
-  }
-});
 
