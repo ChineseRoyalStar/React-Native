@@ -7,24 +7,29 @@
  */
 
 import React, {Component} from 'react';
-import {AppState} from 'react-native';
+import {StyleSheet, PermissionsAndroid} from 'react-native';
 
 export default class App extends Component {
 
-  onValueChange(choice, noUse) {
-    this.setState({choice});
+  componentDidMount() {
+    let para = {
+      enableHightAccuract: true,
+      timeout: 20000,
+      maximumAge: 1000
+    };
+    navigator.geolocation.getCurrentPosition(this.getPositionResult, this.logError, para);
+    this.watchID = navigator.geolocation.watchPosition(this.getPositionResult);
   }
-
-  componentWillMount() {
-    AppState.addEventListener('change', this._handleAppStateChange.bind(this));
-  }
-
   componentWillUnmount() {
-    AppState.removeEventListener('change', this._handleAppStateChange);
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+  
+  getPositionResult(aPosition) {
+    console.log(aPosition);
   }
 
-  _handleAppStateChange(newState) {
-    console.log('Appstate is:' + newState);
+  logError(aError) {
+    console.log(aError);
   }
 
   render(){
