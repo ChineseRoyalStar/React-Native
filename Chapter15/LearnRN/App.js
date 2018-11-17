@@ -7,33 +7,36 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, PermissionsAndroid} from 'react-native';
+import {StyleSheet, VibrationIOS,Vibration,View,Text} from 'react-native';
 
 export default class App extends Component {
 
-  componentDidMount() {
-    let para = {
-      enableHightAccuract: true,
-      timeout: 20000,
-      maximumAge: 1000
-    };
-    navigator.geolocation.getCurrentPosition(this.getPositionResult, this.logError, para);
-    this.watchID = navigator.geolocation.watchPosition(this.getPositionResult);
-  }
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
-  }
-  
-  getPositionResult(aPosition) {
-    console.log(aPosition);
+  startVibration() {
+    let pattern = [0,500,200,500];
+    Vibration.vibrate(pattern);
+    console.log('vib is called.');
   }
 
-  logError(aError) {
-    console.log(aError);
-  }
-
-  render(){
-    return null;
+  render() {
+   return (
+    <View style={styles.container}>
+      <Text style={styles.welcome} onPress = {this.startVibration.bind(this)}>Press to Vibrate</Text>
+      <Text style={styles.welcome} onPress = {()=>{Vibration.cancel()}}>Press to Cancel Vibrate</Text>
+    </View>);
   }
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 30,
+    textAlign: 'center',
+    backgroundColor: 'grey',
+    margin: 20,
+  }
+});
 
