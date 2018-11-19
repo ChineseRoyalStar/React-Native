@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "React/RCTEventDispather.h"
-#import "React/RCTView.h"
-#import "RNFLAnimatedImage.h"
+#import <React/RCTEventDispatcher.h>
+#import <React/RCTView.h>
+#import <FLAnimatedImage/FLAnimatedImage.h>
 @class RCTEventDispatcher;
 @interface RNFLAnimatedImage : UIView
-@property(nonatomic, assign) NSString *src;
-@property(nonatomic, assign) NSNumber *contentMode;
+@property(nonatomic, copy) NSString *src;
+@property(nonatomic, strong) NSNumber *contentMode;
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispather
 NS_DESIGNATED_INITIALIZER;
 @end

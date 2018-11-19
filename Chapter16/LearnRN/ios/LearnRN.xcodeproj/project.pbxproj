@@ -35,9 +35,9 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* LearnRNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* LearnRNTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
-		34B4634321A1AA3A00325B23 /* FLAnimatedImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B4634221A1AA1F00325B23 /* FLAnimatedImage.framework */; };
-		34B4634621A1AA9700325B23 /* RNFLAnimatedImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B4634521A1AA9700325B23 /* RNFLAnimatedImageManager.m */; };
-		34B4634921A1ACCF00325B23 /* RNFLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B4634821A1ACCF00325B23 /* RNFLAnimatedImage.m */; };
+		34C12E1521A31A4100822255 /* RNFLAnimatedImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C12DEC21A31A4000822255 /* RNFLAnimatedImageManager.m */; };
+		34C12E1621A31A4100822255 /* RNFLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C12E1321A31A4000822255 /* RNFLAnimatedImage.m */; };
+		34C12E2A21A31C5300822255 /* FLAnimatedImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C12E2921A31BC000822255 /* FLAnimatedImage.framework */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
@@ -191,9 +191,9 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
-		34B4634121A1AA1F00325B23 /* PBXContainerItemProxy */ = {
+		34C12E2821A31BC000822255 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 34B4633D21A1AA1F00325B23 /* FLAnimatedImage.xcodeproj */;
+			containerPortal = 34C12E2421A31BC000822255 /* FLAnimatedImage.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 92C9BC0C1B199DC500D79B06;
 			remoteInfo = FLAnimatedImage;
@@ -349,11 +349,11 @@
 		2D02E47B1E0B4A5D006451C7 /* LearnRN-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LearnRN-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* LearnRN-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LearnRN-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		34B4633D21A1AA1F00325B23 /* FLAnimatedImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FLAnimatedImage.xcodeproj; path = "FLAnimatedImage-master/FLAnimatedImage.xcodeproj"; sourceTree = "<group>"; };
-		34B4634421A1AA9700325B23 /* RNFLAnimatedImageManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNFLAnimatedImageManager.h; sourceTree = "<group>"; };
-		34B4634521A1AA9700325B23 /* RNFLAnimatedImageManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNFLAnimatedImageManager.m; sourceTree = "<group>"; };
-		34B4634721A1ACCF00325B23 /* RNFLAnimatedImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNFLAnimatedImage.h; sourceTree = "<group>"; };
-		34B4634821A1ACCF00325B23 /* RNFLAnimatedImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNFLAnimatedImage.m; sourceTree = "<group>"; };
+		34C12DEC21A31A4000822255 /* RNFLAnimatedImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFLAnimatedImageManager.m; sourceTree = "<group>"; };
+		34C12E1221A31A4000822255 /* RNFLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFLAnimatedImage.h; sourceTree = "<group>"; };
+		34C12E1321A31A4000822255 /* RNFLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFLAnimatedImage.m; sourceTree = "<group>"; };
+		34C12E1421A31A4000822255 /* RNFLAnimatedImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFLAnimatedImageManager.h; sourceTree = "<group>"; };
+		34C12E2421A31BC000822255 /* FLAnimatedImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FLAnimatedImage.xcodeproj; path = "FLAnimatedImage-master/FLAnimatedImage.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -373,7 +373,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34B4634321A1AA3A00325B23 /* FLAnimatedImage.framework in Frameworks */,
+				34C12E2A21A31C5300822255 /* FLAnimatedImage.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -498,13 +498,13 @@
 		13B07FAE1A68108700A75B9A /* LearnRN */ = {
 			isa = PBXGroup;
 			children = (
+				34C12E1221A31A4000822255 /* RNFLAnimatedImage.h */,
+				34C12E1321A31A4000822255 /* RNFLAnimatedImage.m */,
+				34C12E1421A31A4000822255 /* RNFLAnimatedImageManager.h */,
+				34C12DEC21A31A4000822255 /* RNFLAnimatedImageManager.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				34B4634421A1AA9700325B23 /* RNFLAnimatedImageManager.h */,
-				34B4634521A1AA9700325B23 /* RNFLAnimatedImageManager.m */,
-				34B4634721A1ACCF00325B23 /* RNFLAnimatedImage.h */,
-				34B4634821A1ACCF00325B23 /* RNFLAnimatedImage.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -544,10 +544,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		34B4633E21A1AA1F00325B23 /* Products */ = {
+		34C12E2521A31BC000822255 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				34B4634221A1AA1F00325B23 /* FLAnimatedImage.framework */,
+				34C12E2921A31BC000822255 /* FLAnimatedImage.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -573,7 +573,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				34B4633D21A1AA1F00325B23 /* FLAnimatedImage.xcodeproj */,
+				34C12E2421A31BC000822255 /* FLAnimatedImage.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -749,8 +749,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 34B4633E21A1AA1F00325B23 /* Products */;
-					ProjectRef = 34B4633D21A1AA1F00325B23 /* FLAnimatedImage.xcodeproj */;
+					ProductGroup = 34C12E2521A31BC000822255 /* Products */;
+					ProjectRef = 34C12E2421A31BC000822255 /* FLAnimatedImage.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -945,11 +945,11 @@
 			remoteRef = 2DF0FFEC2056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		34B4634221A1AA1F00325B23 /* FLAnimatedImage.framework */ = {
+		34C12E2921A31BC000822255 /* FLAnimatedImage.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = FLAnimatedImage.framework;
-			remoteRef = 34B4634121A1AA1F00325B23 /* PBXContainerItemProxy */;
+			remoteRef = 34C12E2821A31BC000822255 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
@@ -1159,8 +1159,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				34B4634621A1AA9700325B23 /* RNFLAnimatedImageManager.m in Sources */,
-				34B4634921A1ACCF00325B23 /* RNFLAnimatedImage.m in Sources */,
+				34C12E1521A31A4100822255 /* RNFLAnimatedImageManager.m in Sources */,
+				34C12E1621A31A4100822255 /* RNFLAnimatedImage.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1218,6 +1218,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = "";
+				"HEADER_SEARCH_PATHS[arch=*]" = "";
 				INFOPLIST_FILE = LearnRNTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1256,10 +1258,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7V8W8M7RP2;
-				"HEADER_SEARCH_PATHS[arch=*]" = (
-					"${SRCROOT}/FLAnimatedImage-master/FLAnimatedImage",
-					"$(SRCROOT)/../node_modules/react-native/React",
-				);
+				HEADER_SEARCH_PATHS = "${SRCROOT}/FLAnimatedImage-master/FLAnimatedImage";
+				"HEADER_SEARCH_PATHS[arch=*]" = "${SRCROOT}/FLAnimatedImage-master/FLAnimatedImage";
 				INFOPLIST_FILE = LearnRN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
