@@ -7,36 +7,39 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, VibrationIOS,Vibration,View,Text} from 'react-native';
+import {StyleSheet,View,Text} from 'react-native';
+
+import FLAnimatedImage from './FLAnimatedImage';
 
 export default class App extends Component {
-
-  startVibration() {
-    let pattern = [0,500,200,500];
-    Vibration.vibrate(pattern);
-    console.log('vib is called.');
-  }
 
   render() {
    return (
     <View style={styles.container}>
-      <Text style={styles.welcome} onPress = {this.startVibration.bind(this)}>Press to Vibrate</Text>
-      <Text style={styles.welcome} onPress = {()=>{Vibration.cancel()}}>Press to Cancel Vibrate</Text>
+      <FLAnimatedImage style={styles.container1} src='https://n.sinaimg.cn/tech/transform/317/w200h117/20181120/bUrh-hmhhnqt1561961.gif' resizeMode="contain"></FLAnimatedImage>
+      <Text style={styles.textStyle}>Hello, world.</Text>
     </View>);
   }
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center'
+  },
+  container1: {
+    width: 300,
+    height: 300,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor:'#F5FCFF',
   },
-  welcome: {
+  textStyle:{
+    position: 'absolute',
+    top: 320,
+    left:50,
+    height: 40,
     fontSize: 30,
-    textAlign: 'center',
-    backgroundColor: 'grey',
-    margin: 20,
+    backgroundColor: 'transparent'
   }
 });
 
